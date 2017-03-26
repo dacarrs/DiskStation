@@ -1,0 +1,14 @@
+## Backup a list of all files for every shared folder in a NAS folder
+
+# Delete previous backup files
+rm /volume1/<path to backup folder>/HPDiskStation.dss
+rm /volume1/<path to backup folder>/SharedVols.tar.gz
+
+# List all files for every shared folder. It can be made volume wide, without shared folder distinction
+find /volume1/<shared folder>/ > /volume1/<path to backup folder>/<shared folder name>.txt
+
+# Compress generated txt files to shrink size, no need to have big txt files Once compressed txt original files will be deleted.
+tar -zcvf /volume1/<path to backup folder>/SharedVols.tar.gz /volume1/<path to backup folder>/*.txt --remove-files
+
+# Generate a backup of the system config for the Synology NAS. 
+synoconfbkp export --filepath=/volume1/<path to backup folder>/NAS_NAME.dss
